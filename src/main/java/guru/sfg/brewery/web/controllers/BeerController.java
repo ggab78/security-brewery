@@ -19,7 +19,7 @@ package guru.sfg.brewery.web.controllers;
 
 
 import guru.sfg.brewery.domain.Beer;
-import guru.sfg.brewery.repositories.BeerInventoryRepository;
+//import guru.sfg.brewery.repositories.BeerInventoryRepository;
 import guru.sfg.brewery.repositories.BeerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -45,7 +45,7 @@ import java.util.UUID;
 public class BeerController {
 
     private final BeerRepository beerRepository;
-    private final BeerInventoryRepository beerInventoryRepository;
+//    private final BeerInventoryRepository beerInventoryRepository;
 
 
     @RequestMapping("/find")

@@ -47,11 +47,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 class BeerControllerTest {
+
     @Mock
     BeerRepository beerRepository;
 
     @InjectMocks
     BeerController controller;
+
     List<Beer> beerList;
     UUID uuid;
     Beer beer;

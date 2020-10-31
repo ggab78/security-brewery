@@ -26,7 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //return new LdapShaPasswordEncoder();
         //return new StandardPasswordEncoder();
         //return new BCryptPasswordEncoder();
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        //return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return CustomPasswordFactory.createDelegatingPasswordEncoder();
     }
 
     @Override

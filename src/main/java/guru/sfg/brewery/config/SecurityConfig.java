@@ -1,6 +1,7 @@
 package guru.sfg.brewery.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,7 +16,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests(auth->{
-                    auth.antMatchers("/","/webjars/**", "/login", "/resources/**").permitAll();
+                    auth
+                            .antMatchers("/","/webjars/**", "/login", "/resources/**").permitAll()
+                            .antMatchers("/beers/find","/beers*").permitAll()
+                            .antMatchers(HttpMethod.GET,"/api/v1/beer","/api/v1/beer/*", "/api/v1/beerUpc/*").permitAll();
                 })
                 .authorizeRequests()
                 .anyRequest()
@@ -24,6 +28,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .and()
                 .httpBasic();
-
     }
 }

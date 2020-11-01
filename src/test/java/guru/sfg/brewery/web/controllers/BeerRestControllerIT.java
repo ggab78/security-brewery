@@ -15,11 +15,19 @@ public class BeerRestControllerIT extends BaseIT {
 
 
     @Test
+    void deleteBeerWithUrlParamAuth() throws Exception {
+        mockMvc.perform(delete("/api/v1/beer/"+ UUID.randomUUID())
+                .param("Api-User","gab")
+                .param("Api-Password", "hugo"))
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
     void deleteBeerBadCredentials() throws Exception {
         mockMvc.perform(delete("/api/v1/beer/"+ UUID.randomUUID())
                 .header("Api-User","gab")
                 .header("Api-Password", "xxxx"))
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is4xxClientError());
     }
 
     @Test

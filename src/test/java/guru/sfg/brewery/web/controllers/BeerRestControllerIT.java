@@ -15,7 +15,7 @@ public class BeerRestControllerIT extends BaseIT {
 
     @Test
     void deleteBeer() throws Exception {
-        mockMvc.perform(delete("api/v1/beer/"+ UUID.randomUUID())
+        mockMvc.perform(delete("/api/v1/beer/"+ UUID.randomUUID())
                 .header("Api-User","gab")
                 .header("Api-Password", "hugo"))
                 .andExpect(status().isOk());

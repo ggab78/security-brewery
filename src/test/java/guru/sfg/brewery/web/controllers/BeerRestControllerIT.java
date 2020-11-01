@@ -5,6 +5,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import java.util.UUID;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -20,6 +21,21 @@ public class BeerRestControllerIT extends BaseIT {
                 .header("Api-Password", "hugo"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void deleteBeerWithHttpBasic() throws Exception {
+        mockMvc.perform(delete("/api/v1/beer/"+ UUID.randomUUID())
+                .with(httpBasic("gab","hugo")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteBeerNoAuth() throws Exception {
+        mockMvc.perform(delete("/api/v1/beer/"+ UUID.randomUUID()))
+                .andExpect(status().isUnauthorized());
+    }
+
+
 
 
     @Test

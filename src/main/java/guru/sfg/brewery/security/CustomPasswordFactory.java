@@ -1,4 +1,4 @@
-package guru.sfg.brewery.config;
+package guru.sfg.brewery.security;
 
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -5,11 +5,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import java.util.UUID;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @WebMvcTest
 public class BeerRestControllerIT extends BaseIT {
+
+
+    @Test
+    void deleteBeer() throws Exception {
+        mockMvc.perform(delete("api/v1/beer/"+ UUID.randomUUID())
+                .header("Api-User","gab")
+                .header("Api-Password", "hugo"))
+                .andExpect(status().isOk());
+    }
+
 
     @Test
     void findBeers() throws Exception {

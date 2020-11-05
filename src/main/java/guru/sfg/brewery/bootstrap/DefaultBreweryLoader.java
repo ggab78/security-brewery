@@ -73,10 +73,12 @@ public class DefaultBreweryLoader implements CommandLineRunner {
 
     private void loadBreweryData() {
         if (breweryRepository.count() == 0) {
+
             breweryRepository.save(Brewery
                     .builder()
                     .breweryName("Cage Brewing")
                     .build());
+
 
             Beer mangoBobs = Beer.builder()
                     .beerName("Mango Bobs")
@@ -85,12 +87,13 @@ public class DefaultBreweryLoader implements CommandLineRunner {
                     .quantityToBrew(200)
                     .upc(BEER_1_UPC)
                     .build();
-
-            beerRepository.save(mangoBobs);
             beerInventoryRepository.save(BeerInventory.builder()
                     .beer(mangoBobs)
                     .quantityOnHand(500)
                     .build());
+            beerRepository.save(mangoBobs);
+
+
 
             Beer galaxyCat = Beer.builder()
                     .beerName("Galaxy Cat")
@@ -99,12 +102,14 @@ public class DefaultBreweryLoader implements CommandLineRunner {
                     .quantityToBrew(200)
                     .upc(BEER_2_UPC)
                     .build();
-
-            beerRepository.save(galaxyCat);
             beerInventoryRepository.save(BeerInventory.builder()
                     .beer(galaxyCat)
                     .quantityOnHand(500)
                     .build());
+            beerRepository.save(galaxyCat);
+
+
+
 
             Beer pinball = Beer.builder()
                     .beerName("Pinball Porter")
@@ -113,12 +118,12 @@ public class DefaultBreweryLoader implements CommandLineRunner {
                     .quantityToBrew(200)
                     .upc(BEER_3_UPC)
                     .build();
-
-            beerRepository.save(pinball);
             beerInventoryRepository.save(BeerInventory.builder()
                     .beer(pinball)
                     .quantityOnHand(500)
                     .build());
+            beerRepository.save(pinball);
+
 
         }
     }

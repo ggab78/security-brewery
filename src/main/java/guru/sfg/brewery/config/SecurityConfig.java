@@ -115,22 +115,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-
+//    @Override
+//    @Bean
+//    protected UserDetailsService userDetailsService() {
+//
         UserDetails admin= User.withDefaultPasswordEncoder()
-                .username("gab")
-                .password("hugo")
-                .roles("ADMIN")
-                .build();
-
-        UserDetails user=User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("password")
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, user);
-    }
+//                .username("gab")
+//                .password("hugo")
+//                .roles("ADMIN")
+//                .build();
+//
+//        UserDetails user=User.withDefaultPasswordEncoder()
+//                .username("user")
+//                .password("password")
+//                .roles("USER")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(admin, user);
+//    }
 }

@@ -20,6 +20,8 @@ package guru.sfg.brewery.web.controllers;
 import guru.sfg.brewery.domain.Brewery;
 import guru.sfg.brewery.services.BreweryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,9 +43,9 @@ public class BreweryController {
         model.addAttribute("breweries", breweryService.getAllBreweries());
         return "breweries/index";
     }
+
     @GetMapping("/api/v1/breweries")
-    public @ResponseBody
-    List<Brewery> getBreweriesJson(){
-        return breweryService.getAllBreweries();
+    public ResponseEntity<List<Brewery>> getBreweriesJson(){
+        return new ResponseEntity<>(breweryService.getAllBreweries(), HttpStatus.OK);
     }
 }

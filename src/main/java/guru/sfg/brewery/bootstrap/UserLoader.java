@@ -30,9 +30,9 @@ public class UserLoader implements CommandLineRunner {
 
     private void loadUsers() {
 
-        Authority admin = Authority.builder().role("ADMIN").build();
-        Authority userRole = Authority.builder().role("USER").build();
-        Authority customer = Authority.builder().role("CUSTOMER").build();
+        Authority admin = Authority.builder().role("ROLE_ADMIN").build();
+        Authority userRole = Authority.builder().role("ROLE_USER").build();
+        Authority customer = Authority.builder().role("ROLE_CUSTOMER").build();
 
         authorityRepository.save(admin);
         authorityRepository.save(userRole);

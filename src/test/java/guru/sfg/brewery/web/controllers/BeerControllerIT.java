@@ -40,21 +40,21 @@ public class BeerControllerIT extends BaseIT{
                 .andExpect(model().attributeExists("beer"));
     }
 
-    @Test
-    void findBeersWithAnonymous() throws Exception{
-        mockMvc.perform(get("/beers/find").with(anonymous()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("beers/findBeers"))
-                .andExpect(model().attributeExists("beer"));
-    }
+//    @Test
+//    void findBeersWithAnonymous() throws Exception{
+//        mockMvc.perform(get("/beers/find").with(anonymous()))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("beers/findBeers"))
+//                .andExpect(model().attributeExists("beer"));
+//    }
 
 
-    @Test
-    void findBeersPermitAll() throws Exception{
-        mockMvc.perform(get("/beers/find"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("beers/findBeers"))
-                .andExpect(model().attributeExists("beer"));
-    }
+//    @Test
+//    void findBeersPermitAll() throws Exception{
+//        mockMvc.perform(get("/beers/find"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("beers/findBeers"))
+//                .andExpect(model().attributeExists("beer"));
+//    }
 
 }

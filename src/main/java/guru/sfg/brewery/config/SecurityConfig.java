@@ -65,13 +65,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests(auth->{
                     auth
                             .antMatchers("/","/webjars/**", "/login", "/resources/**").permitAll()
-                            .antMatchers("/beers/find","/beers*").permitAll()
                             .antMatchers("/h2-console/**").permitAll()
-                            .antMatchers(HttpMethod.GET,"/api/v1/beer","/api/v1/beer/*").permitAll()
+                            .antMatchers("/beers/find","/beers*").hasAnyRole("ADMIN", "USER","CUSTOMER")
+                            .antMatchers(HttpMethod.GET,"/api/v1/beer","/api/v1/beer/*").hasAnyRole("ADMIN", "USER","CUSTOMER")
+                            .mvcMatchers(HttpMethod.GET,"/api/v1/beerUpc/{upc}").hasAnyRole("ADMIN", "USER","CUSTOMER")
+
+
                             .antMatchers(HttpMethod.DELETE,"/api/v1/beer/*").hasRole("ADMIN")
+
+
                             .antMatchers(HttpMethod.GET, "/brewery/api/v1/breweries").hasAnyRole("ADMIN","CUSTOMER")
-                            .antMatchers("/brewery/breweries").hasAnyRole("ADMIN","CUSTOMER")
-                            .mvcMatchers(HttpMethod.GET,"/api/v1/beerUpc/{upc}").permitAll();
+                            .antMatchers("/brewery/breweries").hasAnyRole("ADMIN","CUSTOMER");
+
                 })
                 .authorizeRequests()
                 .anyRequest()

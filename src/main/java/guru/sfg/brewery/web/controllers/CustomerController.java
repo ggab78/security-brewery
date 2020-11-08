@@ -19,6 +19,9 @@ package guru.sfg.brewery.web.controllers;
 
 import guru.sfg.brewery.domain.Customer;
 import guru.sfg.brewery.repositories.CustomerRepository;
+import guru.sfg.brewery.security.permissions.CustomerCreatePermission;
+import guru.sfg.brewery.security.permissions.CustomerReadPermission;
+import guru.sfg.brewery.security.permissions.CustomerUpdatePermission;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,7 +54,7 @@ public class CustomerController {
 
 
     //@Secured({"ROLE_ADMIN","ROLE_CUSTOMER"})
-    @PreAuthorize("hasAuthority('read.customer')")
+    @CustomerReadPermission
     @GetMapping
     public String processFindFormReturnMany(Customer customer, BindingResult result, Model model) {
         // find customers by name
@@ -72,7 +75,7 @@ public class CustomerController {
         }
     }
 
-    @PreAuthorize("hasAuthority('read.customer')")
+    @CustomerReadPermission
     @GetMapping("/{customerId}")
     public ModelAndView showCustomer(@PathVariable UUID customerId) {
         ModelAndView mav = new ModelAndView("customers/customerDetails");
@@ -81,13 +84,14 @@ public class CustomerController {
         return mav;
     }
 
+    @CustomerCreatePermission
     @GetMapping("/new")
     public String initCreationForm(Model model) {
         model.addAttribute("customer", Customer.builder().build());
         return "customers/createCustomer";
     }
 
-    @PreAuthorize("hasAuthority('create.customer')")
+    @CustomerCreatePermission
     @PostMapping("/new")
     public String processCreationForm(Customer customer) {
         //ToDO: Add Service
@@ -99,7 +103,7 @@ public class CustomerController {
         return "redirect:/customers/" + savedCustomer.getId();
     }
 
-
+    @CustomerUpdatePermission
     @GetMapping("/{customerId}/edit")
     public String initUpdateCustomerForm(@PathVariable UUID customerId, Model model) {
         if (customerRepository.findById(customerId).isPresent())
@@ -107,7 +111,7 @@ public class CustomerController {
         return "customers/createOrUpdateCustomer";
     }
 
-    @PreAuthorize("hasAuthority('update.customer')")
+    @CustomerUpdatePermission
     @PostMapping("/{beerId}/edit")
     public String processUpdationForm(@Valid Customer customer, BindingResult result) {
         if (result.hasErrors()) {

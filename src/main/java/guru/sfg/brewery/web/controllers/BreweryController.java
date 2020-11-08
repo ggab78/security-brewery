@@ -22,6 +22,7 @@ import guru.sfg.brewery.services.BreweryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,12 +39,14 @@ public class BreweryController {
 
     private final BreweryService breweryService;
 
+    @PreAuthorize("hasAuthority('read.brewery')")
     @GetMapping({"/breweries", "/breweries/index", "/breweries/index.html", "/breweries.html"})
     public String listBreweries(Model model) {
         model.addAttribute("breweries", breweryService.getAllBreweries());
         return "breweries/index";
     }
 
+    @PreAuthorize("hasAuthority('read.brewery')")
     @GetMapping("/api/v1/breweries")
     public ResponseEntity<List<Brewery>> getBreweriesJson(){
         return new ResponseEntity<>(breweryService.getAllBreweries(), HttpStatus.OK);

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class UserLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        if(authorityRepository.count()==0){
+        if (authorityRepository.count() == 0) {
             loadUsers();
         }
 
@@ -38,25 +39,39 @@ public class UserLoader implements CommandLineRunner {
 //beer auths
         Authority createBeer = authorityRepository.save(Authority.builder().permission("create.beer").build());
         Authority readBeer = authorityRepository.save(Authority.builder().permission("read.beer").build());
-        Authority  updateBeer = authorityRepository.save(Authority.builder().permission("update.beer").build());
-        Authority  deleteBeer = authorityRepository.save(Authority.builder().permission("delete.beer").build());
+        Authority updateBeer = authorityRepository.save(Authority.builder().permission("update.beer").build());
+        Authority deleteBeer = authorityRepository.save(Authority.builder().permission("delete.beer").build());
+//customer auths
+        Authority createCustomer = authorityRepository.save(Authority.builder().permission("create.customer").build());
+        Authority readCustomer = authorityRepository.save(Authority.builder().permission("read.customer").build());
+        Authority updateCustomer = authorityRepository.save(Authority.builder().permission("update.customer").build());
+        Authority deleteCustomer = authorityRepository.save(Authority.builder().permission("delete.customer").build());
+
+        //brewery auths
+        Authority createBrewery = authorityRepository.save(Authority.builder().permission("create.brewery").build());
+        Authority readBrewery = authorityRepository.save(Authority.builder().permission("read.brewery").build());
+        Authority updateBrewery = authorityRepository.save(Authority.builder().permission("update.brewery").build());
+        Authority deleteBrewery = authorityRepository.save(Authority.builder().permission("delete.brewery").build());
+
 
         Role adminRole = roleRepository.save(Role.builder().roleName("ADMIN").build());
         Role userRole = roleRepository.save(Role.builder().roleName("USER").build());
         Role customerRole = roleRepository.save(Role.builder().roleName("CUSTOMER").build());
 
-        adminRole.setAuthorities(Set.of(createBeer, readBeer, updateBeer, deleteBeer));
-        customerRole.setAuthorities(Set.of(readBeer));
-        userRole.setAuthorities(Set.of(readBeer));
+        adminRole.setAuthorities(new HashSet<>(Set.of(createBeer, readBeer, updateBeer, deleteBeer,
+                                        createCustomer, readCustomer, updateCustomer, deleteCustomer,
+                                        createBrewery, readBrewery, updateBrewery, deleteBrewery)));
 
-        roleRepository.saveAll(Arrays.asList(adminRole,customerRole,userRole));
+        customerRole.setAuthorities(new HashSet<>(Set.of(readBeer, readCustomer, readBrewery)));
+        userRole.setAuthorities(new HashSet<>(Set.of(readBeer)));
+
+        roleRepository.saveAll(Arrays.asList(adminRole, customerRole, userRole));
 
         userRepository.save(User.builder()
                 .username("gab")
                 .password(passwordEncoder.encode("hugo"))
                 .role(adminRole)
                 .build());
-
 
         userRepository.save(User.builder()
                 .username("hugo")
@@ -70,7 +85,8 @@ public class UserLoader implements CommandLineRunner {
                 .role(userRole)
                 .build());
 
-        log.debug("Users loaded : "+userRepository.count());
+
+        log.debug("Users loaded : " + userRepository.count());
 
     }
 }

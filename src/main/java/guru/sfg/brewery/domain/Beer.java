@@ -70,7 +70,7 @@ public class Beer extends BaseEntity {
     private Integer quantityToBrew;
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "beer", cascade = CascadeType.MERGE)
     @Fetch(FetchMode.JOIN)
     private Set<BeerInventory> beerInventory = new HashSet<>();
 }

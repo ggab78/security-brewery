@@ -2,6 +2,7 @@ package guru.sfg.brewery.web.controllers;
 
 import guru.sfg.brewery.repositories.BeerRepository;
 import guru.sfg.brewery.repositories.CustomerRepository;
+import guru.sfg.brewery.services.BeerOrderService;
 import guru.sfg.brewery.services.BeerService;
 import guru.sfg.brewery.services.BreweryService;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,6 +36,9 @@ public abstract class BaseIT {
     @MockBean
     BeerService beerService;
 
+    @MockBean
+    BeerOrderService beerOrderService;
+
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders
@@ -61,6 +65,5 @@ public abstract class BaseIT {
         return Stream.of(Arguments.of("hugo", "boss"),
                 Arguments.of("gab", "hugo"));
     }
-
 
 }

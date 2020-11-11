@@ -1,5 +1,6 @@
 package guru.sfg.brewery.web.controllers;
 
+import guru.sfg.brewery.repositories.BeerInventoryRepository;
 import guru.sfg.brewery.repositories.BeerRepository;
 import guru.sfg.brewery.repositories.CustomerRepository;
 import guru.sfg.brewery.services.BeerOrderService;
@@ -23,21 +24,6 @@ public abstract class BaseIT {
     WebApplicationContext wac;
 
     MockMvc mockMvc;
-
-    @MockBean
-    BeerRepository beerRepository;
-
-    @MockBean
-    BreweryService breweryService;
-
-    @MockBean
-    CustomerRepository customerRepository;
-
-    @MockBean
-    BeerService beerService;
-
-    @MockBean
-    BeerOrderService beerOrderService;
 
     @BeforeEach
     void setUp() {
@@ -64,6 +50,11 @@ public abstract class BaseIT {
     public static Stream<Arguments> getStreamAdminCustomer() {
         return Stream.of(Arguments.of("hugo", "boss"),
                 Arguments.of("gab", "hugo"));
+    }
+    public static Stream<Arguments> getStreamAllUsers() {
+        return Stream.of(Arguments.of("gab" , "hugo"),
+                Arguments.of("hugo", "boss"),
+                Arguments.of("user", "password"));
     }
 
 }

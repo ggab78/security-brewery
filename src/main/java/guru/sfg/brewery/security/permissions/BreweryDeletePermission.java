@@ -7,6 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 
 
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAuthority('delete.brewery')")
+@PreAuthorize("hasAuthority('brewery.delete')")
 public @interface BreweryDeletePermission {
 }

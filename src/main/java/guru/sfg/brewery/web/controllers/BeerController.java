@@ -87,6 +87,7 @@ public class BeerController {
         mav.addObject(beerRepository.findById(beerId).get());
         return mav;
     }
+
     @BeerCreatePermission
     @GetMapping("/new")
     public String initCreationForm(Model model) {

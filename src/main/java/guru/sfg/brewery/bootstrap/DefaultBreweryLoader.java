@@ -165,7 +165,8 @@ public class DefaultBreweryLoader implements CommandLineRunner {
                     .upc(BEER_1_UPC)
                     .build();
 
-            beerRepository.save(mangoBobs);
+            beerRepository.saveAndFlush(mangoBobs);
+
             beerInventoryRepository.save(BeerInventory.builder()
                     .beer(mangoBobs)
                     .quantityOnHand(500)
@@ -248,8 +249,8 @@ public class DefaultBreweryLoader implements CommandLineRunner {
         roleRepository.saveAll(Arrays.asList(adminRole, customerRole, userRole));
 
         userRepository.save(User.builder()
-                .username("spring")
-                .password(passwordEncoder.encode("guru"))
+                .username("gab")
+                .password(passwordEncoder.encode("hugo"))
                 .role(adminRole)
                 .build());
 
@@ -260,8 +261,8 @@ public class DefaultBreweryLoader implements CommandLineRunner {
                 .build());
 
         userRepository.save(User.builder()
-                .username("scott")
-                .password(passwordEncoder.encode("tiger"))
+                .username("hugo")
+                .password(passwordEncoder.encode("boss"))
                 .role(customerRole)
                 .build());
 

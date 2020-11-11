@@ -53,7 +53,6 @@ public class CustomerController {
     }
 
 
-    //@Secured({"ROLE_ADMIN","ROLE_CUSTOMER"})
     @CustomerReadPermission
     @GetMapping
     public String processFindFormReturnMany(Customer customer, BindingResult result, Model model) {

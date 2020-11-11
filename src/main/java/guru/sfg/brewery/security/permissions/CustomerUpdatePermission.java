@@ -6,6 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAuthority('update.customer')")
+@PreAuthorize("hasAuthority('customer.update')")
 public @interface CustomerUpdatePermission {
 }

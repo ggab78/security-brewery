@@ -38,8 +38,8 @@ public interface BeerOrderRepository  extends JpaRepository<BeerOrder, UUID> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     BeerOrder findOneById(UUID id);
 
-    @Query("Select o from BeerOrder o where o.id=?1 and " +
-            "true =:#{hasAuthority('order.read')} or o.customer.id = ?#{principal?.customer?.id}")
+    @Query("Select o from BeerOrder o where o.id=?1 and "  +
+            "(true =:#{hasAuthority('order.read')} or o.customer.id = ?#{principal?.customer?.id})")
     BeerOrder findBeerOrderByIdSecure(UUID id);
 
 }

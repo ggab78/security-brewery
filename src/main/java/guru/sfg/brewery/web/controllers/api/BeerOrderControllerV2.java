@@ -50,13 +50,13 @@ public class BeerOrderControllerV2 {
     }
 
 
-    @AdminOrAnyCustomerReadPermission
+//    @AdminOrAnyCustomerReadPermission
     @GetMapping("orders/{orderId}")
-    public BeerOrderDto getOrder(@PathVariable("orderId") UUID orderId) throws ResponseStatusException{
+    public BeerOrderDto getOrder(@PathVariable("orderId") UUID orderId){
         BeerOrderDto dto = beerOrderService.getOrderById(orderId);
 
 
-        if(dto.getCustomerId()==null){
+        if(dto==null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "not found");
         }
 

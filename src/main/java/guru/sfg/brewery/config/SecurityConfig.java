@@ -61,10 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //adds custom filter before UsernamePasswordAuthenticationFilter
         http.addFilterBefore(restHeaderAuthFilter(authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class)
-        .csrf().disable();
+        .csrf().ignoringAntMatchers("/api/**");
+
         http.addFilterBefore(restUrlAuthFilter(authenticationManager()),
                 RestHeaderAuthFilter.class)
-                .csrf().disable();
+                .csrf().ignoringAntMatchers("/api/**");
 
 
         http
@@ -89,7 +90,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .csrf().ignoringAntMatchers("/h2-console/**", "/api/**");
+
 
 
                 //h2-console config

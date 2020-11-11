@@ -81,10 +81,7 @@ public class BeerOrderServiceImpl implements BeerOrderService {
                 beerOrderPage.getTotalElements());
     }
 
-    @Override
-    public BeerOrderDto getOrderById(UUID orderId) {
-        return null;
-    }
+
 
 
     @Transactional
@@ -114,6 +111,13 @@ public class BeerOrderServiceImpl implements BeerOrderService {
     public BeerOrderDto getOrderById(UUID customerId, UUID orderId) {
         return beerOrderMapper.beerOrderToDto(getOrder(customerId, orderId));
     }
+
+    @Override
+    public BeerOrderDto getOrderById(UUID orderId) {
+        BeerOrder beerOrder = beerOrderRepository.findBeerOrderByIdSecure(orderId);
+        return beerOrderMapper.beerOrderToDto(beerOrder);
+    }
+
 
     @Override
     public void pickupOrder(UUID customerId, UUID orderId) {

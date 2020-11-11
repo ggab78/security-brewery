@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 public class BeerOrderControllerV2Test{
 
-    public static final String API_ROOT = "/api/v2/orders";
+    public static final String API_ROOT = "/api/v2/orders/";
 
 
     @Autowired
@@ -95,7 +95,7 @@ public class BeerOrderControllerV2Test{
     }
 
 
-    @Disabled
+
     @Transactional
     @Test
     void getByOrderIdNotAuth() throws Exception {
@@ -105,7 +105,7 @@ public class BeerOrderControllerV2Test{
                 .andExpect(status().isUnauthorized());
     }
 
-    @Disabled
+
     @Transactional
     @WithUserDetails("gab")
     @Test
@@ -116,7 +116,7 @@ public class BeerOrderControllerV2Test{
                 .andExpect(status().is2xxSuccessful());
     }
 
-    @Disabled
+
     @Transactional
     @WithUserDetails(DefaultBreweryLoader.STPETE)
     @Test
@@ -127,7 +127,7 @@ public class BeerOrderControllerV2Test{
                 .andExpect(status().is2xxSuccessful());
     }
 
-    @Disabled
+
     @Transactional
     @WithUserDetails(DefaultBreweryLoader.DUNEDIN)
     @Test
@@ -135,7 +135,7 @@ public class BeerOrderControllerV2Test{
         BeerOrder beerOrder = stPeteCustomer.getBeerOrders().stream().findFirst().orElseThrow();
 
         mockMvc.perform(get(API_ROOT + beerOrder.getId()))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isNotFound());
     }
 
 

@@ -3,14 +3,17 @@ package guru.sfg.brewery.config;
 import guru.sfg.brewery.security.CustomPasswordFactory;
 import guru.sfg.brewery.security.RestHeaderAuthFilter;
 import guru.sfg.brewery.security.RestUrlAuthFilter;
+import guru.sfg.brewery.security.permissions.BeerCreatePermission;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableMBeanExport;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.*;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -33,6 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         RestUrlAuthFilter filter = new RestUrlAuthFilter(new AntPathRequestMatcher("/api/**"));
         filter.setAuthenticationManager(authenticationManager);
         return filter;
+    }
+
+    //needed for use with spring data jpa SPeL
+    @Bean
+    public SecurityEvaluationContextExtension securityEvaluationContextExtension(){
+        return new SecurityEvaluationContextExtension();
     }
 
 

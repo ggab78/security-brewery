@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -51,9 +52,15 @@ public class BeerOrderControllerV2 {
 
     @AdminOrAnyCustomerReadPermission
     @GetMapping("orders/{orderId}")
-    @ResponseStatus(HttpStatus.OK)
-    public BeerOrderDto getOrder(@PathVariable("orderId") UUID orderId){
-        return beerOrderService.getOrderById(orderId);
+    public BeerOrderDto getOrder(@PathVariable("orderId") UUID orderId) throws ResponseStatusException{
+        BeerOrderDto dto = beerOrderService.getOrderById(orderId);
+
+
+        if(dto.getCustomerId()==null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "not found");
+        }
+
+        return dto;
     }
 
 }

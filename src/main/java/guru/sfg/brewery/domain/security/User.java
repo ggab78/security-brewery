@@ -45,6 +45,11 @@ public class User implements UserDetails, CredentialsContainer {
                 .collect(Collectors.toSet());
     }
 
+    @OneToMany(mappedBy = "user")
+    private Set<LoginSuccsess> successLogins;
+
+    @OneToMany(mappedBy = "user")
+    private Set<LoginFailure> failureLogins;
 
     @Builder.Default
     private boolean accountNonExpired = true;
@@ -57,7 +62,6 @@ public class User implements UserDetails, CredentialsContainer {
 
     @Builder.Default
     private boolean enabled = true;
-
 
     @Override
     public void eraseCredentials() {

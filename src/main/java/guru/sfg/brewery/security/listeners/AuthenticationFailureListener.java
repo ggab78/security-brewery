@@ -12,6 +12,9 @@ import org.springframework.security.authentication.event.AuthenticationFailureBa
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -50,6 +53,22 @@ public class AuthenticationFailureListener {
         LoginFailure savedLoginFailure = loginFailureRepository.save(builder.build());
         log.debug("Login failure saved :" + savedLoginFailure.getId());
 
+        if(savedLoginFailure.getUser()!=null){
+            lockUser(savedLoginFailure.getUser());
+        }
 
     }
+
+    private void lockUser(User user){
+
+        Timestamp time = Timestamp.valueOf(LocalDateTime.now().minusDays(1));
+        List<LoginFailure> failures = loginFailureRepository.findAllByUserAndCreateDateAfter(user,time);
+        if(failures.size()>3){
+            log.debug("Locking user :"+user.getUsername());
+            user.setAccountNonLocked(false);
+            userRepository.save(user);
+        }
+    }
+
+
 }

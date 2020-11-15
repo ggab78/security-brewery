@@ -1,5 +1,5 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)">
+<html th:fragment="layout (template, menu)" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
 
@@ -62,6 +62,10 @@
                 <li th:replace="::menuItem ('/brewery/breweries','breweries','breweries','th-list','Breweries')">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Breweries</span>
+                </li>
+                <li th:replace="::menuItem ('/user/register2fa','user','register','th-list','Enable 2FA')">
+                    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                    <span>Enable 2FA</span>
                 </li>
 
             </ul>

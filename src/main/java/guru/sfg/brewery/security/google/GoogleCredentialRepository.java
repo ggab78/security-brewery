@@ -14,11 +14,11 @@ import java.util.List;
 @Component
 public class GoogleCredentialRepository implements ICredentialRepository {
 
-
     private final UserRepository userRepository;
 
     @Override
     public String getSecretKey(String userName) {
+
         User user= userRepository.findByUsername(userName).orElseThrow();
         return user.getGoogleSecret();
 
@@ -33,4 +33,5 @@ public class GoogleCredentialRepository implements ICredentialRepository {
 
         userRepository.save(user);
     }
+
 }

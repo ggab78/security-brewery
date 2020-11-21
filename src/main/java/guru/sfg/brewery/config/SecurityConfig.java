@@ -79,7 +79,7 @@ private final Google2faFilter google2faFilter;
                 .csrf().ignoringAntMatchers("/api/**");
 
 
-        http
+        http.cors().and()
                 .authorizeRequests(auth->{
                     auth
                             .antMatchers("/","/webjars/**", "/login", "/resources/**").permitAll()

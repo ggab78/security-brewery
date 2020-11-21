@@ -3,6 +3,7 @@ package guru.sfg.brewery.config;
 import guru.sfg.brewery.security.CustomPasswordFactory;
 import guru.sfg.brewery.security.RestHeaderAuthFilter;
 import guru.sfg.brewery.security.RestUrlAuthFilter;
+import guru.sfg.brewery.security.google.Google2faFilter;
 import guru.sfg.brewery.security.permissions.BeerCreatePermission;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.*;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 @Configuration
@@ -29,6 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 private final UserDetailsService userDetailsService;
 
 private final PersistentTokenRepository persistentTokenRepository;
+
+private final Google2faFilter google2faFilter;
 
     private RestHeaderAuthFilter restHeaderAuthFilter(AuthenticationManager authenticationManager){
 
@@ -62,6 +66,8 @@ private final PersistentTokenRepository persistentTokenRepository;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        http.addFilterBefore(google2faFilter, SessionManagementFilter.class);
 
         //adds custom filter before UsernamePasswordAuthenticationFilter
         http.addFilterBefore(restHeaderAuthFilter(authenticationManager()),

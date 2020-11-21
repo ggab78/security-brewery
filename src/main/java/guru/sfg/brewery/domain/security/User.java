@@ -87,4 +87,14 @@ public class User implements UserDetails, CredentialsContainer {
 
     @UpdateTimestamp
     private Timestamp modifyDate;
+
+
+
+    public boolean getUserGoogle2fa(){
+        return this.userGoogle2fa;
+    }
+
+    public boolean getGoogle2faRequired(){
+        return this.google2faRequired;
+    }
 }

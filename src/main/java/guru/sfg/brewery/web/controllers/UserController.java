@@ -40,8 +40,6 @@ public class UserController {
         return "user/register2fa";
     }
 
-
-
     @PostMapping
     public String confirm2Fa(@RequestParam Integer verifyCode){
 
